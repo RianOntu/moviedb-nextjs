@@ -1,3 +1,4 @@
+import MoreLikeThis from "@/app/components/MoreLikeThis";
 import Image from "next/image";
 
 async function Page({ params }) {
@@ -171,6 +172,8 @@ async function Page({ params }) {
           </div>
         </div>
       </div>
+      {/* more like this */}
+      <MoreLikeThis genres={singleMovie.genres} paramId={params.movieID}/>
     </>
   );
 }
