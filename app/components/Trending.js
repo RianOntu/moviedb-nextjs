@@ -30,7 +30,7 @@ function Trending() {
         <Link href={`/movie/${movie.id}`} key={movie.id}>
           <div className="flex-shrink-0 relative w-48 h-[292px] cursor-pointer hover:scale-105 transition-transform bg-black rounded-lg overflow-hidden">
             <Image
-              src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/original${movie.poster_path||movie.backdrop_path}`}
               alt={movie.original_title}
               fill
               className="object-cover"

@@ -1,11 +1,11 @@
 import MoreLikeThis from "@/app/components/MoreLikeThis";
+import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
 import Image from "next/image";
+import { Suspense } from "react";
 
 async function Page({ params }) {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}?api_key=${process.env.API_KEY}`
-  );
-  const singleMovie = await response.json();
+  const singleMovie = await getSingleMovie(params.movieID);
+  const relevantmoviePromise = getRelevantMovie(params.movieID);
 
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${process.env.API_KEY}`
@@ -20,7 +20,11 @@ async function Page({ params }) {
           <div className="absolute inset-0">
             <Image
               fill
-              src={`https://image.tmdb.org/t/p/original${singleMovie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original${
+                singleMovie.backdrop_path == null
+                  ? "/"
+                  : singleMovie.backdrop_path
+              }`}
               alt={singleMovie.original_title}
               className="w-full h-full object-cover object-top  z-1"
             />
@@ -32,7 +36,11 @@ async function Page({ params }) {
               <div className="relative md:w-1/3">
                 <Image
                   fill
-                  src={`https://image.tmdb.org/t/p/original${singleMovie.backdrop_path}`}
+                  src={`https://image.tmdb.org/t/p/original${
+                    singleMovie.poster_path == null
+                      ? "/"
+                      : singleMovie.poster_path
+                  }`}
                   alt={singleMovie.original_title}
                   className="w-full rounded-lg shadow-lg object-cover"
                 />
@@ -173,7 +181,9 @@ async function Page({ params }) {
         </div>
       </div>
       {/* more like this */}
-      <MoreLikeThis genres={singleMovie.genres} paramId={params.movieID}/>
+      <Suspense fallback={<div className="loading">Loading...</div>}>
+        <MoreLikeThis relevantmoviePromise={relevantmoviePromise} />
+      </Suspense>
     </>
   );
 }
