@@ -3,7 +3,7 @@ import User from "../models/User";
 
 export async function createUser(userObject) {
    
-    console.log('query type',typeof userObject);
+    console.log('type from query',typeof userObject);
     
     return await User.create(userObject);
 }
