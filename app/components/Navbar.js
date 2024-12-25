@@ -46,6 +46,9 @@ function Navbar() {
             <Link href="/compare" className="text-white hover:text-gray-300">
               Compare Movies
             </Link>
+            <Link href="/watch" className="text-white hover:text-gray-300">
+              Watch Later
+            </Link>
             <Link href="/login" className="text-white hover:text-gray-300">
               Login
             </Link>
