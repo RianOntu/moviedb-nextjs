@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../_Hooks/useAuth";
+import { useAuth } from "@/app/_Hooks/useAuth";
 import { userLogin } from "../_actions/actions";
 
 function Page() {
@@ -17,7 +17,7 @@ function Page() {
         throw new Error("Please provide Email and Password");
       }
       const foundUser = await userLogin(formData);
-      console.log(foundUser);
+      console.log('founduser',foundUser);
       
       if (foundUser) {
         setAuth(foundUser);

@@ -7,6 +7,7 @@ export async function createUser(userObject) {
     
     return await User.create(userObject);
 }
+
 export async function findUserByCredentials(credentials) {
     const user = await User.findOne({email:credentials.email}).lean();
     if (user) {

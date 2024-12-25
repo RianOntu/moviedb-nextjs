@@ -1,3 +1,6 @@
+
+import { useAuth } from "@/app/_Hooks/useAuth";
+
 export async function getAllmovies() {
   const res = await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}`
@@ -19,6 +22,11 @@ export async function getSingleMovie(id) {
   );
   const singleMovie = await response.json();
   return singleMovie;
+}
+
+export  function getAuth(){
+  const { auth }=useAuth();
+  return auth;
 }
 
 

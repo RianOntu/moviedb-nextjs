@@ -1,4 +1,6 @@
+'use client'
 import MoreLikeThis from "@/app/components/MoreLikeThis";
+import SingleMovieSvgOne from "@/app/svgs/SingleMovieSvgOne";
 import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -12,6 +14,28 @@ async function Page({ params }) {
   );
   const temp_casts = await res.json();
   const casts = temp_casts.cast.slice(0, 13);
+
+  // Handle form submission
+  async function handleAddToWatchList (event) {
+    event.preventDefault();
+    try {
+      const response = await fetch("/api/addToWatchList", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(singleMovie),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add to watchlist");
+      }
+
+      alert("Movie added to the watchlist!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <>
@@ -78,6 +102,7 @@ async function Page({ params }) {
                     ))}
                   </div>
                 </div>
+
                 <div className="mb-6">
                   <h3 className="text-gray-400 mb-2">Cast</h3>
                   <div className="flex flex-wrap gap-4">
@@ -97,27 +122,12 @@ async function Page({ params }) {
                 <div className="mb-6">
                   <div className="flex flex-wrap gap-4">
                     <div className="text-center">
-                      <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          className="icon icon-tabler icons-tabler-outline icon-tabler-file-plus"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                          <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                          <path d="M12 11l0 6" />
-                          <path d="M9 14l6 0" />
-                        </svg>
-                        Add to Wacth List
-                      </button>
+                      <form onSubmit={handleAddToWatchList}>
+                        <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg">
+                          <SingleMovieSvgOne />
+                          Add to Watch List
+                        </button>
+                      </form>
                     </div>
 
                     <div className="text-center">
@@ -138,7 +148,7 @@ async function Page({ params }) {
                           <path d="M7 12l5 5l10 -10" />
                           <path d="M2 12l5 5m5 -5l5 -5" />
                         </svg>
-                        Added to Wacth List
+                        Added to Watch List
                       </button>
                     </div>
                   </div>
@@ -159,7 +169,7 @@ async function Page({ params }) {
                     <button className="text-center cursor-pointer">
                       <img
                         src="http://x.com/favicon.ico"
-                        alt="Facebook"
+                        alt="X"
                         className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
                       />
                       <p className="text-sm">X</p>
@@ -168,7 +178,7 @@ async function Page({ params }) {
                     <button className="text-center cursor-pointer">
                       <img
                         src="http://linkedin.com/favicon.ico"
-                        alt="Facebook"
+                        alt="Linkedin"
                         className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
                       />
                       <p className="text-sm">Linkedin</p>
@@ -180,7 +190,7 @@ async function Page({ params }) {
           </div>
         </div>
       </div>
-      {/* more like this */}
+
       <Suspense fallback={<div className="loading">Loading...</div>}>
         <MoreLikeThis relevantmoviePromise={relevantmoviePromise} />
       </Suspense>
