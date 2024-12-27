@@ -2,10 +2,15 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+// import { useAuth } from "../_Hooks/useAuth";
 
 function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  // const { auth } = useAuth();
+  // console.log("navbar", auth);
+  // const userLoggedInTemp = localStorage.getItem("auth");
+  // const userLoggedIn = JSON.parse(userLoggedInTemp);
 
   const handleSearch = async (e) => {
     const newQuery = e.target.value;
@@ -46,9 +51,12 @@ function Navbar() {
             <Link href="/compare" className="text-white hover:text-gray-300">
               Compare Movies
             </Link>
-            <Link href="/watch" className="text-white hover:text-gray-300">
-              Watch Later
-            </Link>
+           
+              <Link href="/watch" className="text-white hover:text-gray-300">
+                Watch Later
+              </Link>
+      
+
             <Link href="/login" className="text-white hover:text-gray-300">
               Login
             </Link>

@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/public/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { connectMongoDB } from "@/dbConnect/connectMongo";
 import { ToastContainer } from "react-toastify";
@@ -13,17 +13,18 @@ async function RootLayout({ children }) {
   await connectMongoDB();
 
   return (
-    <AuthProvider>
-      <html lang="en">
-        <head>
-          <link rel="stylesheet" href="/styles/output.css" />
-        </head>
-        <body className="bg-black text-white">
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/styles/output.css" />
+        <link rel="stylesheet" href="/styles/globals.css" />
+      </head>
+      <body className="bg-black text-white">
+        <AuthProvider>
           <ToastContainer />
           {children}
-        </body>
-      </html>
-    </AuthProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }
 export default RootLayout;

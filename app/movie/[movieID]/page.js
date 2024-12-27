@@ -1,6 +1,8 @@
-'use client'
+import AddedToWatchLaterBtn from "@/app/components/addedToWatchLaterBtn";
+import Form from "@/app/components/Form";
 import MoreLikeThis from "@/app/components/MoreLikeThis";
-import SingleMovieSvgOne from "@/app/svgs/SingleMovieSvgOne";
+import Movie from "@/app/models/WatchList";
+import SingleMovieSvgTwo from "@/app/svgs/SingleMovieSvgTwo";
 import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -15,27 +17,10 @@ async function Page({ params }) {
   const temp_casts = await res.json();
   const casts = temp_casts.cast.slice(0, 13);
 
-  // Handle form submission
-  async function handleAddToWatchList (event) {
-    event.preventDefault();
-    try {
-      const response = await fetch("/api/addToWatchList", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(singleMovie),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add to watchlist");
-      }
-
-      alert("Movie added to the watchlist!");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  const addedToWatchLater = await Movie.find({
+    movie_id: parseInt(params.movieID),
+  });
+  console.log("addedwatch", addedToWatchLater);
 
   return (
     <>
@@ -118,39 +103,12 @@ async function Page({ params }) {
                     ))}
                   </div>
                 </div>
-
                 <div className="mb-6">
-                  <div className="flex flex-wrap gap-4">
-                    <div className="text-center">
-                      <form onSubmit={handleAddToWatchList}>
-                        <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg">
-                          <SingleMovieSvgOne />
-                          Add to Watch List
-                        </button>
-                      </form>
-                    </div>
-
-                    <div className="text-center">
-                      <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg text-green-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          className="icon icon-tabler icons-tabler-outline icon-tabler-checks"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M7 12l5 5l10 -10" />
-                          <path d="M2 12l5 5m5 -5l5 -5" />
-                        </svg>
-                        Added to Watch List
-                      </button>
-                    </div>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Form
+                      singleMovie={singleMovie}
+                      addedToWatchLater={addedToWatchLater}
+                    />
                   </div>
                 </div>
 

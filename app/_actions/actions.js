@@ -1,24 +1,25 @@
-'use server';
+"use server";
 
 import { redirect } from "next/navigation";
 import { createUser, findUserByCredentials } from "../_query/query";
 
+
 export async function registerUser(formData) {
-    const user = Object.fromEntries(formData);
-    const created = await createUser(user);
-    if(created){
-        redirect("/login");
-    }
-    
+  const user = Object.fromEntries(formData);
+  const created = await createUser(user);
+  if (created) {
+    redirect("/login");
+  }
 }
+
 export async function userLogin(formData) {
-    try {
-        const credential = {};
-        credential.email = formData.get("email");
-        credential.password = formData.get("password");
-        const found = await findUserByCredentials(credential);
-        return found;
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const credential = {};
+    credential.email = formData.get("email");
+    credential.password = formData.get("password");
+    const found = await findUserByCredentials(credential);
+    return found;
+  } catch (error) {
+    throw error;
+  }
 }

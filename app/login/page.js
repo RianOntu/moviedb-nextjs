@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_Hooks/useAuth";
 import { userLogin } from "../_actions/actions";
+import { getAuthStatus } from "../utils/getAuthStatus";
 
 function Page() {
   const [error, setError] = useState(null);
@@ -17,10 +18,11 @@ function Page() {
         throw new Error("Please provide Email and Password");
       }
       const foundUser = await userLogin(formData);
-      console.log('founduser',foundUser);
-      
+      console.log("founduser", foundUser);
+
       if (foundUser) {
-        setAuth(foundUser);
+        // setAuth(foundUser);
+        getAuthStatus(foundUser);
         router.push("/");
       } else {
         throw new Error("Email or Password Not Matched");
@@ -28,14 +30,12 @@ function Page() {
     } catch (error) {
       setError(error);
       console.log(error);
-      
     }
   }
   return (
     <div className="bg-moviedb-black min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-black/70 rounded-lg p-8 shadow-xl">
         <div className="text-center mb-6">
-    
           <h1 className="text-white text-3xl font-bold mb-4">Sign In</h1>
 
           <form onSubmit={handleSubmit} id="loginForm" className="space-y-4">
