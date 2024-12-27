@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { GetAllWatchlistedMovies } from "../utils/getAllWatchlistedMovies";
+import WatchLaterSvgOne from "../svgs/WatchLaterSvgOne";
+import RemoveWatcLaterBtn from "../components/RemoveWatcLaterBtn";
 
 function ServerPage() {
   const [watchListedMovies, setWatchListedMovies] = useState([]);
@@ -23,7 +25,7 @@ function ServerPage() {
 
     fetchMovies();
   }, []);
-console.log(watchListedMovies);
+  console.log(watchListedMovies);
 
   if (loading) {
     return (
@@ -79,29 +81,14 @@ console.log(watchListedMovies);
                         }
                       )}
                     </span>
-                    <button className="bg-moviedb-red text-light px-3 py-1 rounded-full hover:bg-moviedb-red/80 transition">
-                      Remove
-                    </button>
+                    <RemoveWatcLaterBtn movieId={movie._id} />
                   </div>
                 </div>
               </div>
             ))
           ) : (
             <div id="emptyState" className="text-center py-16">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-24 w-24 mx-auto text-moviedb-gray mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-                />
-              </svg>
+              <WatchLaterSvgOne />
               <h2 className="text-2xl font-bold text-light mb-2">
                 Your Watch Later list is empty
               </h2>

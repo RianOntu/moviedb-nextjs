@@ -14,7 +14,7 @@ function Form({ singleMovie, addedToWatchLater }) {
 
   const handleAddToWatchList = async (event) => {
     event.preventDefault();
-
+    setAdded(true);
     if (
       !singleMovie ||
       !singleMovie.original_title ||
@@ -53,7 +53,7 @@ function Form({ singleMovie, addedToWatchLater }) {
       const newMovie = await response.json();
       setWatchLaterMovies((prevMovies) => [...prevMovies, newMovie]);
 
-      setAdded(true);
+    
       alert("Movie added to the watchlist!");
     } catch (error) {
       console.error("Error:", error);
