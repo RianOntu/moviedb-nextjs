@@ -1,11 +1,29 @@
-import AddedToWatchLaterBtn from "@/app/components/addedToWatchLaterBtn";
-import Form from "@/app/components/Form";
 import MoreLikeThis from "@/app/components/MoreLikeThis";
 import Movie from "@/app/models/WatchList";
-import SingleMovieSvgTwo from "@/app/svgs/SingleMovieSvgTwo";
 import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { Suspense } from "react";
+const Form = dynamic(() => import("@/app/components/Form"), { ssr: false });
+export async function generateMetadata({ params }, parent) {
+  const singleMovie = await getSingleMovie(params.movieID);
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: singleMovie.original_title.slice(0, 100),
+    description: singleMovie.overview.slice(0, 100),
+    openGraph: {
+      images: [
+        {
+          url: `http://localhost:3000/api/og?title=${singleMovie.original_title.slice(0,100)}`,
+          width: 1200,
+          height: 600,
+        },
+      ],
+    },
+  };
+}
 
 async function Page({ params }) {
   const singleMovie = await getSingleMovie(params.movieID);

@@ -86,7 +86,7 @@ function Page() {
               </div>
               <div className="flex-grow flex flex-col items-center justify-center">
                 <Link
-                  href="/searchnadd"
+                  href=""
                   className="bg-zinc-800 text-white px-6 py-3 rounded hover:bg-zinc-700 transition-colors cursor-pointer"
                 >
                   Select Movie

@@ -2,15 +2,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { useAuth } from "../_Hooks/useAuth";
+
 
 function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  // const { auth } = useAuth();
-  // console.log("navbar", auth);
-  // const userLoggedInTemp = localStorage.getItem("auth");
-  // const userLoggedIn = JSON.parse(userLoggedInTemp);
+  
 
   const handleSearch = async (e) => {
     const newQuery = e.target.value;
