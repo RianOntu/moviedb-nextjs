@@ -81,7 +81,11 @@ function ServerPage() {
                         }
                       )}
                     </span>
-                    <RemoveWatcLaterBtn movieId={movie._id} />
+                    <RemoveWatcLaterBtn
+                      movieId={movie._id}
+                      watchListedMovies={watchListedMovies}
+                      setWatchListedMovies={setWatchListedMovies}
+                    />
                   </div>
                 </div>
               </div>
