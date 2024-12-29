@@ -9,6 +9,7 @@ const MovieSlotApp = () => {
   const [activeSlot, setActiveSlot] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [movies, setMovies] = useState([]);
+  const [singleMovie, setSingleMovie] = useState({});
 
   useEffect(() => {
     getAllmovies().then((data) => setMovies(data));
@@ -30,6 +31,51 @@ const MovieSlotApp = () => {
     setIsOpen(false);
     setSearchText("");
   };
+  const [genres, setGenres] = useState([]);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+        );
+        const data = await response.json();
+        setGenres(data.genres);
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    };
+    fetchGenres();
+  }, []);
+  useEffect(() => {
+    const fetchSingleMovieDetails = async () => {
+      const actSlot = slots.find((slot) => slot.id === activeSlot);
+      if (actSlot && actSlot.movie) {
+        try {
+          const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${actSlot.movie.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
+          );
+          const data = await response.json();
+          
+  
+          setSingleMovie(data); 
+        } catch (error) {
+          console.error("Error fetching single movie details:", error);
+        }
+      }
+    };
+  
+    fetchSingleMovieDetails();
+  }, [slots, activeSlot, movies]);
+  
+  const getGenreNames = (genreIds) => {
+    return genreIds
+      .map((id) => {
+        const genre = genres.find((g) => g.id === id);
+        return genre ? genre.name : null;
+      })
+      .filter((name) => name);
+  };
 
   return (
     <>
@@ -49,7 +95,7 @@ const MovieSlotApp = () => {
           {slots.map((slot) => (
             <div
               key={slot.id}
-              className="bg-zinc-900 rounded-lg p-4 flex flex-col min-h-[400px]"
+              className="bg-zinc-900 rounded-lg p-4 flex flex-col"
             >
               <div className="flex justify-end mb-4">
                 <button
@@ -62,34 +108,73 @@ const MovieSlotApp = () => {
                 </button>
               </div>
               {slot.movie ? (
-                <div className="flex-grow flex flex-col items-center justify-center">
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${slot.movie.poster_path}`}
-                    alt={slot.movie.original_title}
-                    className="w-32 h-48 object-cover rounded mb-4"
-                  />
-                  <h3 className="text-white text-center font-bold">
-                    {slot.movie.original_title}
-                  </h3>
-                  <p className="text-gray-400">
-                    {new Date(slot.movie.release_date).toLocaleDateString(
-                      "en-GB",
-                      {
-                        day: "2-digit",
-                        month: "long",
-                        year: "numeric",
-                      }
-                    )}
-                  </p>
+                <div className="grid grid-cols-5 gap-8">
+                  <div className="col-span-2 h-full">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${slot.movie.poster_path}`}
+                      alt={slot.movie.original_title}
+                      className="w-full rounded-lg mb-4 object-contain max-h-full"
+                    />
+                    <h2 className="text-xl font-bold mb-2 text-center">
+                      {slot.movie.original_title}
+                    </h2>
+                  </div>
+                  <div className="w-full space-y-4 col-span-3">
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Rating:</span>
+                      <span className="float-right">
+                        {slot.movie.vote_average}/10
+                      </span>
+                    </div>
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Release Year:</span>
+                      <span className="float-right">
+                        {slot.movie.release_date.split("-")[0]}
+                      </span>
+                    </div>
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Runtime:</span>
+                      <span className="float-right">
+                        {singleMovie.runtime} min
+                      </span>
+                    </div>
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Budget:</span>
+                      <span className="float-right">
+                        ${singleMovie.budget?.toLocaleString() || "N/A"}
+                      </span>
+                    </div>
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Revenue:</span>
+                      <span className="float-right">
+                        ${singleMovie.revenue?.toLocaleString() || "N/A"}
+                      </span>
+                    </div>
+                    <div className="bg-zinc-800 p-3 rounded">
+                      <span className="text-gray-400">Genres:</span>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {getGenreNames(slot.movie.genre_ids).map((genre) => (
+                          <span
+                            key={genre}
+                            className="bg-zinc-700 px-2 py-1 rounded-full text-sm"
+                          >
+                            {genre}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ) : (
-                <div className="flex-grow flex flex-col items-center justify-center">
-                  <button
-                    onClick={() => handleOpenSearch(slot.id)}
-                    className="bg-zinc-800 text-white px-6 py-3 rounded hover:bg-zinc-700 transition-colors cursor-pointer"
-                  >
-                    Select Movie
-                  </button>
+                <div class="bg-zinc-900 rounded-lg p-4 flex flex-col min-h-[400px]">
+                  <div className="flex-grow flex flex-col items-center justify-center">
+                    <button
+                      onClick={() => handleOpenSearch(slot.id)}
+                      className="bg-zinc-800 text-white px-6 py-3 rounded hover:bg-zinc-700 transition-colors cursor-pointer"
+                    >
+                      Select Movie
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
