@@ -72,14 +72,7 @@ function ServerPage() {
                   </h2>
                   <div className="flex justify-between items-center">
                     <span className="text-primary">
-                      {new Date(movie.release_year).toLocaleDateString(
-                        "en-GB",
-                        {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )}
+                      {movie.release_year.split(" ")[2]}
                     </span>
                     <RemoveWatcLaterBtn
                       movieId={movie._id}

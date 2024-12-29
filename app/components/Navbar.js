@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  
 
   const handleSearch = async (e) => {
     const newQuery = e.target.value;
@@ -25,7 +23,7 @@ function Navbar() {
   const fetchSearchResults = async (query) => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&query=${query}`
       );
       const data = await response.json();
       console.log(data);
@@ -48,11 +46,10 @@ function Navbar() {
             <Link href="/compare" className="text-white hover:text-gray-300">
               Compare Movies
             </Link>
-           
-              <Link href="/watch" className="text-white hover:text-gray-300">
-                Watch Later
-              </Link>
-      
+
+            <Link href="/watch" className="text-white hover:text-gray-300">
+              Watch Later
+            </Link>
 
             <Link href="/login" className="text-white hover:text-gray-300">
               Login

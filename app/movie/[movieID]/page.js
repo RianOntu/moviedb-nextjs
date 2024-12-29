@@ -16,7 +16,10 @@ export async function generateMetadata({ params }, parent) {
     openGraph: {
       images: [
         {
-          url: `http://localhost:3000/api/og?title=${singleMovie.original_title.slice(0,100)}`,
+          url: `http://localhost:3000/api/og?title=${singleMovie.original_title.slice(
+            0,
+            100
+          )}`,
           width: 1200,
           height: 600,
         },
@@ -30,7 +33,7 @@ async function Page({ params }) {
   const relevantmoviePromise = getRelevantMovie(params.movieID);
 
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${process.env.API_KEY}`
+    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );
   const temp_casts = await res.json();
   const casts = temp_casts.cast.slice(0, 13);
