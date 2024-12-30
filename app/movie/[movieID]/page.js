@@ -21,9 +21,7 @@ export async function generateMetadata({ params }, parent) {
     openGraph: {
       images: [
         {
-          url: `${
-            process.env.NEXT_PUBLIC_SITE_URL
-          }/api/og?title=${singleMovie.original_title.slice(0, 100)}`,
+          url: `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${singleMovie.poster_path}`,
           width: 1200,
           height: 600,
         },
