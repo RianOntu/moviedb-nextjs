@@ -2,11 +2,11 @@ import React from "react";
 
 import Link from "next/link";
 
-function LinkedIn() {
+function LinkedIn({url}) {
   return (
     <Link
       className="text-center cursor-pointer"
-      href={`https://www.linkedin.com/sharing/share-offsite/?url=example.org`}
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}`}
       target="_blank"
       rel="noopener noreferrer"
     >

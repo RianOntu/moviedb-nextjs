@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -9,7 +9,9 @@ function Popular() {
   useEffect(() => {
     const fetchPopularMovies = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/popular");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/popular`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch popular movies");
         }

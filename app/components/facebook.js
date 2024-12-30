@@ -2,11 +2,11 @@
 import Link from "next/link";
 import React from "react";
 
-function Facebook() {
+function Facebook({url}) {
   return (
     <Link
       className="text-center cursor-pointer"
-      href={`https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank`}
+      href={`https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank`}
     >
       <img
         src="http://facebook.com/favicon.ico"

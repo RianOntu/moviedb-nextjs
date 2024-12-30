@@ -21,10 +21,9 @@ export async function generateMetadata({ params }, parent) {
     openGraph: {
       images: [
         {
-          url: `http://localhost:3000/api/og?title=${singleMovie.original_title.slice(
-            0,
-            100
-          )}`,
+          url: `${
+            process.env.NEXT_PUBLIC_SITE_URL
+          }/api/og?title=${singleMovie.original_title.slice(0, 100)}`,
           width: 1200,
           height: 600,
         },
@@ -61,7 +60,7 @@ async function Page({ params }) {
         />
         <meta
           property="og:url"
-          content={`http://localhost:3000/movie/${singleMovie.id}`}
+          content={`${process.env.NEXT_PUBLIC_SITE_URL}/movie/${singleMovie.id}`}
         />
         <meta property="og:type" content="website" />
       </Head>
@@ -156,11 +155,17 @@ async function Page({ params }) {
                 <div className="mb-6">
                   <h3 className="text-gray-400 mb-2">Share on social media</h3>
                   <div className="flex flex-wrap gap-4">
-                    <Facebook />
+                    <Facebook
+                      url={`${process.env.NEXT_PUBLIC_SITE_URL}/movie/${singleMovie.id}`}
+                    />
 
-                    <Twitter />
+                    <Twitter
+                      url={`${process.env.NEXT_PUBLIC_SITE_URL}/movie/${singleMovie.id}`}
+                    />
 
-                    <LinkedIn />
+                    <LinkedIn
+                      url={`${process.env.NEXT_PUBLIC_SITE_URL}/movie/${singleMovie.id}`}
+                    />
                   </div>
                 </div>
               </div>

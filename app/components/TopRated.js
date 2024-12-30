@@ -9,7 +9,7 @@ function TopRated() {
     useEffect(() => {
       const fetchTopRatedMovies = async () => {
         try {
-          const response = await fetch("http://localhost:3000/api/topRated");
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/topRated`);
           if (!response.ok) {
             throw new Error("Failed to fetch top rated movies");
           }

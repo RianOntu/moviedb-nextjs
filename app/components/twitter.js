@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
 
-function Twitter() {
+function Twitter({url}) {
     return (
         <Link
         className="text-center cursor-pointer"
-        href={`https://twitter.com/intent/tweet?url=example.org&text=Check%20this%20out!`}
+        href={`https://twitter.com/intent/tweet?url=${url}&text=Check%20this%20out!`}
         target="_blank"
         rel="noopener noreferrer"
       >
