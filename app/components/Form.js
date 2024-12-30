@@ -5,7 +5,7 @@ import SingleMovieSvgTwo from "../svgs/SingleMovieSvgTwo";
 import { useRouter } from "next/navigation";
 
 function Form({ singleMovie, addedToWatchLater }) {
-  const router=useRouter();
+  const router = useRouter();
   const [watchLaterMovies, setWatchLaterMovies] = useState(
     addedToWatchLater || []
   );
@@ -16,11 +16,13 @@ function Form({ singleMovie, addedToWatchLater }) {
 
   const handleAddToWatchList = async (event) => {
     event.preventDefault();
-    if(!userEmail){
-      router.push('/login')
+    if (!userEmail) {
+      router.push("/login");
+      return;
     }
-    
+
     setAdded(true);
+
     if (
       !singleMovie ||
       !singleMovie.original_title ||
@@ -59,7 +61,6 @@ function Form({ singleMovie, addedToWatchLater }) {
       const newMovie = await response.json();
       setWatchLaterMovies((prevMovies) => [...prevMovies, newMovie]);
 
-    
       alert("Movie added to the watchlist!");
     } catch (error) {
       console.error("Error:", error);

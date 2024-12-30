@@ -43,7 +43,11 @@ function Navbar() {
   };
   const handleLogOut = () => {
     setBtnChange(true)
-    localStorage.removeItem("auth");
+    router.push('/login')
+    setTimeout(()=>{
+      localStorage.removeItem("auth");
+    },2000)
+    
   };
 
   return (
