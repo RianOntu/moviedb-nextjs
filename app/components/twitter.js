@@ -5,7 +5,7 @@ function Twitter({url}) {
     return (
         <Link
         className="text-center cursor-pointer"
-        href={`https://twitter.com/intent/tweet?url=${url}&text=Check%20this%20out!`}
+        href={`https://twitter.com/sharing/share-offsite/?url=${url}`}
         target="_blank"
         rel="noopener noreferrer"
       >
