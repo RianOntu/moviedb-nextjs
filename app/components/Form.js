@@ -33,14 +33,9 @@ function Form({ singleMovie, addedToWatchLater }) {
       return;
     }
 
-    const isMovieInWatchlist = watchLaterMovies.some(
-      (movie) => movie.movie_name === singleMovie.original_title
-    );
+  
 
-    if (isMovieInWatchlist) {
-      alert("This movie is already in your watchlist!");
-      return;
-    }
+  
 
     try {
       const response = await fetch(`/api/addToWatchList`, {
