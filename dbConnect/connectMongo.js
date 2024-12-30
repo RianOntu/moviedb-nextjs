@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 export async function connectMongoDB() {
   const cached = {};
-  const MONGO_URI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@movieflix.1gjj1.mongodb.net/?retryWrites=true&w=majority&appName=MovieFlix`;
+  const MONGO_URI = process.env.MONGO_URI;
   if (!MONGO_URI) {
     throw new Error(
       "Please define the MONGO_URI environment variable inside .env.local"
