@@ -21,7 +21,7 @@ export async function generateMetadata({ params }, parent) {
     openGraph: {
       images: [
         {
-          url: `${NEXT_PUBLIC_SITE_URL}/api/og?image=${`https://image.tmdb.org/t/p/w500/${singleMovie.poster_path}`}`,
+          url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/og?image=${`https://image.tmdb.org/t/p/w500/${singleMovie.poster_path}`}`,
           width: 1200,
           height: 600,
         },
