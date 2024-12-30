@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const title = searchParams.get("title") || "My website";
+  const image = searchParams.get("image") || "";
 
   return new ImageResponse(
     (
@@ -19,7 +20,7 @@ export async function GET(request) {
           justifyContent: "center",
         }}
       >
-        {title}
+        <img src={image} alt="" />
       </div>
     ),
     {

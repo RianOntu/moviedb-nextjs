@@ -16,15 +16,12 @@ export async function generateMetadata({ params }, parent) {
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: singleMovie?.original_title?.slice(0, 100) || "Movie Title",
-    description:
-      singleMovie?.overview?.slice(0, 100) || "No description available.",
+    title: singleMovie.original_title.slice(0, 100),
+    description: singleMovie.overview.slice(0, 100),
     openGraph: {
       images: [
         {
-          url: singleMovie?.poster_path
-            ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${singleMovie.poster_path}`
-            : `${process.env.NEXT_PUBLIC_SITE_URL}/default-image.jpg`,
+          url: `${NEXT_PUBLIC_SITE_URL}/api/og?image=${`https://image.tmdb.org/t/p/w500/${singleMovie.poster_path}`}`,
           width: 1200,
           height: 600,
         },
