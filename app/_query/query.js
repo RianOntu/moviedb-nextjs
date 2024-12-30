@@ -9,6 +9,7 @@ export async function createUser(userObject) {
 }
 
 export async function findUserByCredentials(credentials) {
+  await connectMongoDB();
   const user = await User.findOne({ email: credentials.email }).lean();
   if (user) {
     return user;
