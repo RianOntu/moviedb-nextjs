@@ -1,11 +1,20 @@
 "use client";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAuthInWatch } from "../utils/getAuthStatus";
 
 function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+
+  const [userEmail, setUserEmail] = useState(null);
+
+  useEffect(() => {
+    const email = getAuthInWatch();
+    setUserEmail(email);
+  }, []);
 
   const handleSearch = async (e) => {
     const newQuery = e.target.value;
@@ -31,6 +40,9 @@ function Navbar() {
       console.error("Error fetching search results:", error);
     }
   };
+  const handleLogOut = () => {
+    localStorage.removeItem("auth");
+  };
 
   return (
     <nav className="fixed w-full z-50 bg-gradient-to-b from-black to-transparent">
@@ -50,10 +62,19 @@ function Navbar() {
             <Link href="/watch" className="text-white hover:text-gray-300">
               Watch Later
             </Link>
-
-            <Link href="/login" className="text-white hover:text-gray-300">
-              Login
-            </Link>
+            {userEmail ? (
+              <Link
+                href="#"
+                onClick={handleLogOut}
+                className="text-white hover:text-gray-300"
+              >
+                Logout
+              </Link>
+            ) : (
+              <Link href="/login" className="text-white hover:text-gray-300">
+                Login
+              </Link>
+            )}
           </div>
         </div>
         <div className="relative">

@@ -1,10 +1,15 @@
+import Facebook from "@/app/components/facebook";
+import LinkedIn from "@/app/components/linkedin";
 import MoreLikeThis from "@/app/components/MoreLikeThis";
+import Twitter from "@/app/components/twitter";
 import Movie from "@/app/models/WatchList";
 import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import Image from "next/image";
 import { Suspense } from "react";
 const Form = dynamic(() => import("@/app/components/Form"), { ssr: false });
+
 export async function generateMetadata({ params }, parent) {
   const singleMovie = await getSingleMovie(params.movieID);
 
@@ -45,6 +50,21 @@ async function Page({ params }) {
 
   return (
     <>
+      <Head>
+        <title>{singleMovie.original_title}</title>
+        <meta name="description" content={singleMovie.overview} />
+        <meta property="og:title" content={singleMovie.original_title} />
+        <meta property="og:description" content={singleMovie.overview} />
+        <meta
+          property="og:image"
+          content={`https://image.tmdb.org/t/p/original${singleMovie.poster_path}`}
+        />
+        <meta
+          property="og:url"
+          content={`http://localhost:3000/movie/${singleMovie.id}`}
+        />
+        <meta property="og:type" content="website" />
+      </Head>
       <div id="movieDetails" className="min-h-screen pt-20 mb-8">
         <div className="relative h-screen">
           <div className="absolute inset-0">
@@ -136,32 +156,11 @@ async function Page({ params }) {
                 <div className="mb-6">
                   <h3 className="text-gray-400 mb-2">Share on social media</h3>
                   <div className="flex flex-wrap gap-4">
-                    <button className="text-center cursor-pointer">
-                      <img
-                        src="http://facebook.com/favicon.ico"
-                        alt="Facebook"
-                        className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-                      />
-                      <p className="text-sm">Facebook</p>
-                    </button>
+                    <Facebook />
 
-                    <button className="text-center cursor-pointer">
-                      <img
-                        src="http://x.com/favicon.ico"
-                        alt="X"
-                        className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-                      />
-                      <p className="text-sm">X</p>
-                    </button>
+                    <Twitter />
 
-                    <button className="text-center cursor-pointer">
-                      <img
-                        src="http://linkedin.com/favicon.ico"
-                        alt="Linkedin"
-                        className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-                      />
-                      <p className="text-sm">Linkedin</p>
-                    </button>
+                    <LinkedIn />
                   </div>
                 </div>
               </div>

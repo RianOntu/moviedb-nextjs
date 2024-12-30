@@ -9,11 +9,11 @@ export function getAuthStatus(foundUser) {
 }
 
 export function getAuthInWatch() {
-  const userEmailTemp = localStorage.getItem("auth");
-  const userEmail = JSON.parse(userEmailTemp);
-  
-  
-  return userEmail
+  if (typeof window !== "undefined") {
+    const userEmailTemp = localStorage.getItem("auth");
+    return JSON.parse(userEmailTemp);
+  }
+  return null; 
 }
 
 

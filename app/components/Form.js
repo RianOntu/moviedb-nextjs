@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from "react";
 import SingleMovieSvgOne from "../svgs/SingleMovieSvgOne";
 import SingleMovieSvgTwo from "../svgs/SingleMovieSvgTwo";
+import { useRouter } from "next/navigation";
 
 function Form({ singleMovie, addedToWatchLater }) {
+  const router=useRouter();
   const [watchLaterMovies, setWatchLaterMovies] = useState(
     addedToWatchLater || []
   );
@@ -14,6 +16,10 @@ function Form({ singleMovie, addedToWatchLater }) {
 
   const handleAddToWatchList = async (event) => {
     event.preventDefault();
+    if(!userEmail){
+      router.push('/login')
+    }
+    
     setAdded(true);
     if (
       !singleMovie ||

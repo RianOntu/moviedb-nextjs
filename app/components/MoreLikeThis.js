@@ -4,9 +4,10 @@ import React from "react";
 
 
 async function MoreLikeThis({ relevantmoviePromise }) {
+  
+  
   const more_like_this = await relevantmoviePromise;
-
-
+  console.log(more_like_this);
   return (
     <>
       <div class="container mx-auto px-4 py-8">
