@@ -84,7 +84,7 @@ function Form({ singleMovie, addedToWatchLater }) {
       </div>
 
       <div className="text-center">
-        {(added || watchLaterMovies.length > 0) && (
+        {(added && watchLaterMovies.length > 0) && (
           <button className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg text-green-600">
             <SingleMovieSvgTwo />
             Added to Watch List
