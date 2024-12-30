@@ -1,8 +1,10 @@
 import Movie from "@/app/models/WatchList";
+import { connectMongoDB } from "@/dbConnect/connectMongo";
 import { NextResponse } from "next/server";
 
 
 export async function POST(req) {
+  await connectMongoDB()
   try {
     const { movie, userEmail } = await req.json();
 
@@ -46,7 +48,7 @@ export async function POST(req) {
   }
 }
 export async function GET(req) {
-  
+  await connectMongoDB()
   const { searchParams } = new URL(req.url);
   const userEmail = searchParams.get('email'); 
 
