@@ -8,7 +8,7 @@ import { getAuthInWatch } from "../utils/getAuthStatus";
 function Navbar() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [btnChange,setBtnChange]=useState(false)
+  const [btnChange, setBtnChange] = useState(false);
 
   const [userEmail, setUserEmail] = useState(null);
 
@@ -42,12 +42,9 @@ function Navbar() {
     }
   };
   const handleLogOut = () => {
-    setBtnChange(true)
-    router.push('/login')
-    setTimeout(()=>{
-      localStorage.removeItem("auth");
-    },2000)
-    
+    setBtnChange(true);
+
+    localStorage.removeItem("auth");
   };
 
   return (
@@ -70,13 +67,13 @@ function Navbar() {
             </Link>
             {!btnChange ? (
               <Link
-                href="#"
+                href="/login"
                 onClick={handleLogOut}
                 className="text-white hover:text-gray-300"
               >
                 Logout
               </Link>
-            ) :  (
+            ) : (
               <Link href="/login" className="text-white hover:text-gray-300">
                 Login
               </Link>
