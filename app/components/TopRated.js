@@ -27,7 +27,7 @@ function TopRated() {
       <h2 className="text-2xl font-bold mb-4">Top Rated</h2>
       <div id="topRatedMovies" className="flex space-x-4 overflow-x-auto pb-4">
       {movies.map((movie) => (
-          <Link href={`movie/${movie._id}`} key={movie._id}>
+          <Link href={`movie/${movie.id}`} key={movie.id}>
             <div className="flex-shrink-0 relative w-48 h-[292px] cursor-pointer hover:scale-105 transition-transform bg-black rounded-lg overflow-hidden">
               <Image
                 src={`https://image.tmdb.org/t/p/original${
