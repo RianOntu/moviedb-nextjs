@@ -3,7 +3,10 @@ export async function GET(req) {
 
   const id = searchParams.get("id");
   console.log('GET_id',id);
-  
+  if (!id) {
+    return res.status(400).json({ error: 'Movie ID is required' });
+  }
+
   
   const url =`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}`;
   try {
