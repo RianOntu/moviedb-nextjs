@@ -4,6 +4,7 @@ import MoreLikeThis from "@/app/components/MoreLikeThis";
 import Twitter from "@/app/components/twitter";
 import Movie from "@/app/models/WatchList";
 import { getCredits, getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
+import { connectMongoDB } from "@/dbConnect/connectMongo";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Image from "next/image";
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }, parent) {
 }
 
 async function Page({ params }) {
+  await connectMongoDB()
   const singleMovie = await getSingleMovie(params.movieID);
   const relevantmoviePromise = getRelevantMovie(params.movieID);
  const response=await getCredits(params.movieID)
