@@ -9,9 +9,11 @@ import { getAuthStatus } from "../utils/getAuthStatus";
 function Page() {
   const [error, setError] = useState(null);
   const { setAuth } = useAuth();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       const formData = new FormData(e.currentTarget);
       if (!formData.get("email") || !formData.get("password")) {
@@ -22,6 +24,7 @@ function Page() {
 
       if (foundUser) {
         // setAuth(foundUser);
+        setLoading(false);
         getAuthStatus(foundUser);
         router.push("/");
       } else {
@@ -53,11 +56,16 @@ function Page() {
               className="w-full p-3 bg-moviedb-gray text-white rounded focus:outline-none focus:ring-2 focus:ring-moviedb-red"
               required
             />
+
             <button
               type="submit"
               className="w-full bg-moviedb-red text-white py-3 rounded hover:bg-red-700 transition duration-300"
             >
-              Sign In
+              {loading ? (
+                <p className="text-sm text-white">Loading...</p>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </form>
 
