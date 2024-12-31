@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Image from "next/image";
 import { Suspense } from "react";
+export const maxDuration = 30; 
 const Form = dynamic(() => import("@/app/components/Form"), { ssr: false });
 
 export async function generateMetadata({ params }, parent) {
