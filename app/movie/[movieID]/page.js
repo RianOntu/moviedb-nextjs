@@ -3,7 +3,7 @@ import LinkedIn from "@/app/components/linkedin";
 import MoreLikeThis from "@/app/components/MoreLikeThis";
 import Twitter from "@/app/components/twitter";
 import Movie from "@/app/models/WatchList";
-import { getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
+import { getCredits, getRelevantMovie, getSingleMovie } from "@/app/utils/getAllMovies";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Image from "next/image";
@@ -33,11 +33,9 @@ export async function generateMetadata({ params }, parent) {
 async function Page({ params }) {
   const singleMovie = await getSingleMovie(params.movieID);
   const relevantmoviePromise = getRelevantMovie(params.movieID);
-
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.movieID}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
-  );
-  const temp_casts = await res.json();
+ const response=await getCredits(params.movieID)
+  
+  const temp_casts = await response.json();
   const casts = temp_casts.cast.slice(0, 13);
 
   const addedToWatchLater = await Movie.find({

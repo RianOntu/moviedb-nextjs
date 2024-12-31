@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,9 +6,12 @@ import React from "react";
 
 async function MoreLikeThis({ relevantmoviePromise }) {
   
+  setTimeout(()=>{
+     console.log('loading');
+     
+  },3000)
   
   const more_like_this = await relevantmoviePromise;
-  console.log(more_like_this);
   return (
     <>
       <div class="container mx-auto px-4 py-8">
