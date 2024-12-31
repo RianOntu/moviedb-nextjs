@@ -5,7 +5,7 @@ export async function getAllmovies() {
   const allMovies = await res.json();
   return allMovies;
 }
-export async function getCredits({ id }) {
+export async function getCredits(id) {
   const res = await fetch(
     `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.NEXT_PUBLIC_API_KEY}`
   );

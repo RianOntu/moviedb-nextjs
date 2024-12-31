@@ -34,9 +34,8 @@ async function Page({ params }) {
   const singleMovie = await getSingleMovie(params.movieID);
   const relevantmoviePromise = getRelevantMovie(params.movieID);
  const response=await getCredits(params.movieID)
-  
-  const temp_casts = await response.json();
-  const casts = temp_casts.cast.slice(0, 13);
+ 
+  const casts = response.cast.slice(0, 13);
 
   const addedToWatchLater = await Movie.find({
     movie_id: parseInt(params.movieID),
