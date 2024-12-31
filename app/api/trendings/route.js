@@ -15,6 +15,7 @@ export async function GET() {
         { status: response.status }
       );
     }
+    
 
     const trendingMovies = await response.json();
     return new Response(JSON.stringify(trendingMovies), { status: 200 });
