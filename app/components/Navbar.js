@@ -11,6 +11,7 @@ function Navbar() {
   const [btnChange, setBtnChange] = useState(false);
 
   const [userEmail, setUserEmail] = useState(null);
+  
 
   useEffect(() => {
     const email = getAuthInWatch();
@@ -65,7 +66,7 @@ function Navbar() {
             <Link href="/watch" className="text-white hover:text-gray-300">
               Watch Later
             </Link>
-            {!btnChange ? (
+            {(!btnChange && userEmail) ? (
               <Link
                 href="/login"
                 onClick={handleLogOut}

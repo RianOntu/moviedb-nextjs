@@ -5,8 +5,8 @@ import { createUser, findUserByCredentials } from "../_query/query";
 
 
 export async function registerUser(formData) {
-  const user = Object.fromEntries(formData);
-  const created = await createUser(user);
+ 
+  const created = await createUser(formData);
   if (created) {
     redirect("/login");
   }
