@@ -172,7 +172,7 @@ async function Page({ params }) {
         </div>
       </div>
 
-      <Suspense fallback={<div className="loading">Loading...</div>}>
+      <Suspense fallback={<div className="text-center">Loading...</div>}>
         <MoreLikeThis relevantmoviePromise={relevantmoviePromise} />
       </Suspense>
     </>
