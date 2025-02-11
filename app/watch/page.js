@@ -93,7 +93,7 @@ function ServerPage() {
                 Explore movies and add them to your list to watch later
               </p>
               <a
-                href="#"
+                href="/"
                 className="bg-primary text-dark px-6 py-2 rounded-full hover:bg-primary/80 transition"
               >
                 Explore Movies
